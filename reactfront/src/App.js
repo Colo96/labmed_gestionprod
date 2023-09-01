@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import TableProducts from "./components/TableProducts";
 
 const baseURL = "http://localhost:4000/api/products";
 
@@ -17,7 +18,8 @@ function App() {
 
   return (
     <>
-      <div>{post}</div>
+      <div>{JSON.stringify(post)}</div>
+      <TableProducts />
     </>
   );
 }
