@@ -6,23 +6,49 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
+import UpdateIcon from "@mui/icons-material/Update";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { IconButton } from "@mui/material";
 
 const getURL = "http://localhost:4000/api/products";
 
 export default function TableProducts() {
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState([]);
+  const [categories, setCategories] = useState({});
 
   useEffect(() => {
     getProducts();
-  }, []);
+  });
 
   const getProducts = async () => {
-    const result = await axios.get(getURL);
-    setPost(result.data);
+    try {
+      const result = await axios.get(getURL);
+      setPost(result.data);
+      await getCategoryForProducts(result.data);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const getCategoryForProducts = async (products) => {
+    try {
+      const categoryIds = new Set(
+        products.map((product) => product.id_categoria)
+      );
+      const categoryData = {};
+
+      for (const categoryId of categoryIds) {
+        const result = await axios.get(
+          `http://localhost:4000/api/categories/${categoryId}`
+        );
+        categoryData[categoryId] = result.data[0];
+      }
+
+      setCategories(categoryData);
+    } catch (error) {
+      console.error("Error al obtener las categorías:", error);
+    }
   };
 
   return (
@@ -36,7 +62,7 @@ export default function TableProducts() {
             <TableCell>Stock</TableCell>
             <TableCell>Categoria</TableCell>
             <TableCell>Fecha Alta</TableCell>
-            <TableCell>Borrar</TableCell>
+            <TableCell>Acciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -67,14 +93,20 @@ export default function TableProducts() {
                   <TableCell>{product.nombre}</TableCell>
                   <TableCell>{product.precio}</TableCell>
                   <TableCell>{product.stock}</TableCell>
-                  <TableCell>{product.id_categoria}</TableCell>
+                  <TableCell>
+                    {categories[product.id_categoria]
+                      ? categories[product.id_categoria].nombre
+                      : "Categoría desconocida"}
+                  </TableCell>
                   <TableCell>{product.fecha_alta}</TableCell>
                   <TableCell>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      startIcon={<DeleteIcon />}
-                    />
+                    <IconButton
+                      color="primary"
+                      aria-label="update product"
+                      size="large"
+                    >
+                      <UpdateIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))

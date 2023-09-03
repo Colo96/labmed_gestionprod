@@ -1,25 +1,14 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
 import TableProducts from "./components/TableProducts";
-
-const baseURL = "http://localhost:4000/api/products";
+import Navbar from "./components/Navbar";
+import { Container } from "@mui/material";
 
 function App() {
-  const [post, setPost] = useState(null);
-
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getProducts = async () => {
-    const result = await axios.get(baseURL);
-    setPost(result.data);
-  };
-
   return (
     <>
-      <div>{JSON.stringify(post)}</div>
-      <TableProducts />
+      <Navbar />
+      <Container sx={{ width: "100%" }}>
+        <TableProducts />
+      </Container>
     </>
   );
 }
