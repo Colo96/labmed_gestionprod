@@ -30,21 +30,24 @@ export default function Navbar() {
         }}
       >
         <Toolbar sx={{ top: "7px", left: "150px" }}>
-          <Grid container spacing={2}>
-            <Grid xs>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
+            <Grid item xs>
               <Typography variant="h6" component="div">
                 Cronograma de Logistica
               </Typography>
             </Grid>
-            <Grid xs>
+            <Grid item xs>
               <Typography variant="h6" component="div">
                 Bienvenido/a Marce
               </Typography>
             </Grid>
-            <Grid xs>
-              <Button variant="h6" sx={{ fontSize: "18px", p: "0" }}>
-                CERRAR SESIÓN
-              </Button>
+            <Grid item xs>
+              <Box display="flex" alignItems="center">
+                {" "}
+                <Button sx={{ fontSize: "18px", color: "white", p: "0" }}>
+                  CERRAR SESIÓN
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </Toolbar>
