@@ -15,7 +15,7 @@ const getURL = "http://localhost:4000/api/products";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-export default function TableProducts() {
+export default function TableProducts({ datos }) {
   const [post, setPost] = useState([]);
   const [categories, setCategories] = useState({});
   const [activos, setActivos] = useState({});
