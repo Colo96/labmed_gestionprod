@@ -118,10 +118,39 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const setActivationValue = async (req, res) => {
+  try {
+    const { codigo, checked } = req.body;
+    let activo = 0;
+    if (checked === true) {
+      activo = 1;
+    }
+    if (!codigo) {
+      res.status(400).json({
+        message: "Bad request. Please fill all fields",
+      });
+    }
+    const connection = await getConnection();
+    const result = await connection.query(
+      "UPDATE products SET activo = ? WHERE codigo = ?",
+      [activo, codigo]
+    );
+    console.log(result);
+    res.json({
+      message: "active value modified",
+      payload: result,
+    });
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
 export const methods = {
   getProducts,
   getProduct,
   addProduct,
   updateProduct,
   deleteProduct,
+  setActivationValue,
 };
