@@ -114,15 +114,17 @@ export default function TableProducts({ datos }) {
           datos[key] === isNaN
         )
           return true;
-        console.log("key:", key);
-        if (Number.isInteger(value)) console.log("value:", value);
-        return String(value).toLowerCase().includes(datos[key].toLowerCase());
+
+        return (
+          String(value).toLowerCase().includes(datos[key].toLowerCase()) ||
+          String(value).toLowerCase() === datos[key].toLowerCase()
+        );
       })
     )
   );
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ marginBottom: "50px" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>

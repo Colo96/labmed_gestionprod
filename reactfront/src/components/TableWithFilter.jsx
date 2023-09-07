@@ -16,32 +16,26 @@ export default function Inputs() {
 
   const handleCodigoChange = (event) => {
     setCodigo(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleNombreChange = (event) => {
     setNombre(event.target.value);
-    console.log(event.target.value);
   };
 
   const handlePrecioChange = (event) => {
     setPrecio(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleStockChange = (event) => {
     setStock(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleCategoriaChange = (event) => {
     setCategoria(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleFechaAltaChange = (event) => {
     setFechaAlta(event.target.value);
-    console.log(event.target.value);
   };
 
   const datos = {
@@ -52,7 +46,6 @@ export default function Inputs() {
     categoria,
     fechaAlta,
   };
-  console.log(datos);
 
   return (
     <Container sx={{ width: "100%" }}>
