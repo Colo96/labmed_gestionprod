@@ -105,6 +105,20 @@ export default function TableProducts({ datos }) {
       });
   };
 
+  const filteredProducts = post.filter((product) =>
+    Object.values(product).some((value) =>
+      Object.keys(datos).every((key) => {
+        if (
+          datos[key] === "" ||
+          datos[key] === undefined ||
+          datos[key] === isNaN
+        )
+          return true; // No aplicar filtro si el valor de datos está vacío
+        return String(value).toLowerCase().includes(datos[key].toLowerCase());
+      })
+    )
+  );
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -121,62 +135,54 @@ export default function TableProducts({ datos }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {post ? (
-            post.length === 0 ? (
+          {filteredProducts.length === 0 ? (
+            <TableRow
+              key="codigo"
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row" colSpan={8}>
+                No se encontraron resultados.
+              </TableCell>
+            </TableRow>
+          ) : (
+            filteredProducts.map((product) => (
               <TableRow
-                key="codigo"
+                key={product.codigo}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  Empty
+                  {product.codigo}
                 </TableCell>
-                <TableCell>Empty</TableCell>
-                <TableCell>Empty</TableCell>
-                <TableCell>Empty</TableCell>
-                <TableCell>Empty</TableCell>
-                <TableCell>Empty</TableCell>
-                <TableCell>Empty</TableCell>
+                <TableCell>{product.nombre}</TableCell>
+                <TableCell>{product.precio}</TableCell>
+                <TableCell>{product.stock}</TableCell>
+                <TableCell>
+                  {categories[product.id_categoria]
+                    ? categories[product.id_categoria].nombre
+                    : "Categoría desconocida"}
+                </TableCell>
+                <TableCell>{product.fecha_alta}</TableCell>
+                <TableCell>
+                  <IconButton
+                    color="primary"
+                    aria-label="update product"
+                    size="large"
+                    disabled={!activos[product.codigo]}
+                  >
+                    <UpdateIcon />
+                  </IconButton>
+                </TableCell>
+                <TableCell>
+                  <Checkbox
+                    {...label}
+                    defaultChecked
+                    sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
+                    onChange={(event) => isChecked(event, product.codigo)}
+                  />
+                </TableCell>
               </TableRow>
-            ) : (
-              post.map((product) => (
-                <TableRow
-                  key={product.codigo}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {product.codigo}
-                  </TableCell>
-                  <TableCell>{product.nombre}</TableCell>
-                  <TableCell>{product.precio}</TableCell>
-                  <TableCell>{product.stock}</TableCell>
-                  <TableCell>
-                    {categories[product.id_categoria]
-                      ? categories[product.id_categoria].nombre
-                      : "Categoría desconocida"}
-                  </TableCell>
-                  <TableCell>{product.fecha_alta}</TableCell>
-                  <TableCell>
-                    <IconButton
-                      color="primary"
-                      aria-label="update product"
-                      size="large"
-                      disabled={!activos[product.codigo]}
-                    >
-                      <UpdateIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    <Checkbox
-                      {...label}
-                      defaultChecked
-                      sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
-                      onChange={(event) => isChecked(event, product.codigo)}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))
-            )
-          ) : null}
+            ))
+          )}
         </TableBody>
       </Table>
     </TableContainer>
