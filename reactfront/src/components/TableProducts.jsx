@@ -113,7 +113,9 @@ export default function TableProducts({ datos }) {
           datos[key] === undefined ||
           datos[key] === isNaN
         )
-          return true; // No aplicar filtro si el valor de datos está vacío
+          return true;
+        console.log("key:", key);
+        if (Number.isInteger(value)) console.log("value:", value);
         return String(value).toLowerCase().includes(datos[key].toLowerCase());
       })
     )
