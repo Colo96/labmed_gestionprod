@@ -38,14 +38,7 @@ export default function Inputs() {
     setFechaAlta(event.target.value);
   };
 
-  const datos = {
-    codigo,
-    nombre,
-    precio,
-    stock,
-    categoria,
-    fechaAlta,
-  };
+  const datos = [codigo, nombre, precio, stock, categoria, fechaAlta];
 
   return (
     <Container sx={{ width: "100%" }}>
