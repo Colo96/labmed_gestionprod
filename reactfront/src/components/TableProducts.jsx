@@ -7,9 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import UpdateIcon from "@mui/icons-material/Update";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Checkbox, IconButton } from "@mui/material";
+import ModalUpdateForm from "./ModalUpdateForm";
+import ModalAddForm from "./ModalAddForm";
 
 const getURL = "http://localhost:4000/api/products";
 
@@ -19,6 +22,8 @@ export default function TableProducts({ datos }) {
   const [post, setPost] = useState([]);
   const [categories, setCategories] = useState({});
   const [activos, setActivos] = useState({});
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
     getProducts();
@@ -123,6 +128,22 @@ export default function TableProducts({ datos }) {
     )
   );
 
+  const handleOpenUpdateModal = () => {
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+  };
+
+  const handleOpenAddModal = () => {
+    setIsAddModalOpen(true);
+  };
+
+  const handleCloseAddModal = () => {
+    setIsAddModalOpen(false);
+  };
+
   return (
     <TableContainer component={Paper} sx={{ marginBottom: "50px" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -139,7 +160,7 @@ export default function TableProducts({ datos }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredProducts.length === 0 ? (
+          {filteredProducts.length === 0 || !filteredProducts ? (
             <TableRow
               key="codigo"
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -172,8 +193,18 @@ export default function TableProducts({ datos }) {
                     aria-label="update product"
                     size="large"
                     disabled={!activos[product.codigo]}
+                    onClick={handleOpenUpdateModal}
                   >
                     <UpdateIcon />
+                  </IconButton>
+                  <IconButton
+                    color="primary"
+                    aria-label="update product"
+                    size="large"
+                    disabled={!activos[product.codigo]}
+                    onClick={handleOpenAddModal}
+                  >
+                    <AddCircleOutlineIcon />
                   </IconButton>
                 </TableCell>
                 <TableCell>
@@ -189,6 +220,16 @@ export default function TableProducts({ datos }) {
           )}
         </TableBody>
       </Table>
+      <ModalUpdateForm
+        isOpen={isUpdateModalOpen}
+        handleClose={handleCloseUpdateModal}
+        handleOpen={handleOpenUpdateModal}
+      />
+      <ModalAddForm
+        isOpen={isAddModalOpen}
+        handleClose={handleCloseAddModal}
+        handleOpen={handleOpenAddModal}
+      />
     </TableContainer>
   );
 }
