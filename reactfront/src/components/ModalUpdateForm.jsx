@@ -1,20 +1,36 @@
-import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import axios from "axios";
+// import axios from "axios";
 
-const putURL = "http://localhost:4000/api/products";
+// const putURL = "http://localhost:4000/api/products";
 
 export default function ModalUpdateForm({ isOpen, handleClose }) {
-  const updateProducts = async () => {
-    try {
-      await axios.put(putURL, {});
-    } catch (error) {
-      console.log(error);
-    }
+  const initialState = {
+    codigo: "",
+    nombre: "",
+    precio: "",
+    stock: "",
+    categoria: "",
   };
+  const [formData, setFormData] = useState(initialState);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(formData);
+    setFormData(initialState);
+  };
+
   return (
     <div sx={{ width: "50%", height: "50%" }}>
       <Modal
@@ -40,6 +56,7 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
           }}
           noValidate
           autoComplete="off"
+          onSubmit={handleSubmit}
         >
           <div>
             <TextField
@@ -49,6 +66,9 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
               placeholder="EJ:CP7773"
               type="text"
               sx={{ width: "100%", mb: 2 }}
+              name="codigo"
+              value={formData.codigo}
+              onChange={handleChange}
             />
             <TextField
               required
@@ -57,6 +77,9 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
               placeholder="EJ:Tafirol"
               type="text"
               sx={{ width: "100%", mb: 2 }}
+              name="nombre"
+              value={formData.nombre}
+              onChange={handleChange}
             />
             <TextField
               required
@@ -65,6 +88,9 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
               placeholder="EJ:1374.99"
               type="number"
               sx={{ width: "100%", mb: 2 }}
+              name="precio"
+              value={formData.precio}
+              onChange={handleChange}
             />
             <TextField
               required
@@ -73,6 +99,9 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
               placeholder="EJ:32"
               type="number"
               sx={{ width: "100%", mb: 2 }}
+              name="stock"
+              value={formData.stock}
+              onChange={handleChange}
             />
             <TextField
               required
@@ -81,12 +110,15 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
               placeholder="EJ:Ungüento"
               type="text"
               sx={{ width: "100%", mb: 2 }}
+              name="categoria"
+              value={formData.categoria}
+              onChange={handleChange}
             />
           </div>
           <Button
             variant="contained"
             sx={{ backgroundColor: "blue" }}
-            onClick={updateProducts}
+            type="submit"
           >
             Update Product
           </Button>
