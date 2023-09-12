@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import { Container } from "@mui/material";
 import TableProducts from "./TableProducts";
+import Button from "@mui/material/Button";
+import ModalAddForm from "./ModalAddForm";
 
 const ariaLabel = { "aria-label": "description" };
 
@@ -13,6 +15,7 @@ export default function Inputs() {
   const [stock, setStock] = useState("");
   const [categoria, setCategoria] = useState("");
   const [fechaAlta, setFechaAlta] = useState("");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const handleCodigoChange = (event) => {
     setCodigo(event.target.value);
@@ -40,6 +43,14 @@ export default function Inputs() {
 
   const datos = [codigo, nombre, precio, stock, categoria, fechaAlta];
 
+  const handleOpenAddModal = () => {
+    setIsAddModalOpen(true);
+  };
+
+  const handleCloseAddModal = () => {
+    setIsAddModalOpen(false);
+  };
+
   return (
     <Container sx={{ width: "100%" }}>
       <Box
@@ -51,7 +62,7 @@ export default function Inputs() {
         <Input
           placeholder="Codigo"
           inputProps={ariaLabel}
-          sx={{ width: "15%" }}
+          sx={{ width: "12%" }}
           type="text"
           value={codigo}
           onChange={handleCodigoChange}
@@ -59,7 +70,7 @@ export default function Inputs() {
         <Input
           placeholder="Nombre"
           inputProps={ariaLabel}
-          sx={{ width: "15%" }}
+          sx={{ width: "12%" }}
           type="text"
           value={nombre}
           onChange={handleNombreChange}
@@ -67,7 +78,7 @@ export default function Inputs() {
         <Input
           placeholder="Precio"
           inputProps={ariaLabel}
-          sx={{ width: "15%" }}
+          sx={{ width: "12%" }}
           type="number"
           value={precio}
           onChange={handlePrecioChange}
@@ -75,7 +86,7 @@ export default function Inputs() {
         <Input
           placeholder="Stock"
           inputProps={ariaLabel}
-          sx={{ width: "15%" }}
+          sx={{ width: "12%" }}
           type="number"
           value={stock}
           onChange={handleStockChange}
@@ -83,7 +94,7 @@ export default function Inputs() {
         <Input
           placeholder="Categoria"
           inputProps={ariaLabel}
-          sx={{ width: "15%" }}
+          sx={{ width: "12%" }}
           type="text"
           value={categoria}
           onChange={handleCategoriaChange}
@@ -91,13 +102,25 @@ export default function Inputs() {
         <Input
           placeholder="Fecha Alta"
           inputProps={ariaLabel}
-          sx={{ width: "15%" }}
+          sx={{ width: "12%" }}
           type="date"
           value={fechaAlta}
           onChange={handleFechaAltaChange}
         />
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "blue" }}
+          onClick={handleOpenAddModal}
+        >
+          Agregar
+        </Button>
       </Box>
       <TableProducts datos={datos} />
+      <ModalAddForm
+        isOpen={isAddModalOpen}
+        handleClose={handleCloseAddModal}
+        handleOpen={handleOpenAddModal}
+      />
     </Container>
   );
 }
