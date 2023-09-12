@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import Input from "@mui/material/Input";
+import TextField from "@mui/material/TextField";
 import { Container } from "@mui/material";
 import TableProducts from "./TableProducts";
 import Button from "@mui/material/Button";
 import ModalAddForm from "./ModalAddForm";
-
-const ariaLabel = { "aria-label": "description" };
 
 export default function Inputs() {
   const [codigo, setCodigo] = useState("");
@@ -59,53 +57,48 @@ export default function Inputs() {
           "& > :not(style)": { m: 1 },
         }}
       >
-        <Input
-          placeholder="Codigo"
-          inputProps={ariaLabel}
+        <TextField
+          label="Codigo"
           sx={{ width: "12%" }}
           type="text"
           value={codigo}
           onChange={handleCodigoChange}
         />
-        <Input
-          placeholder="Nombre"
-          inputProps={ariaLabel}
+        <TextField
+          label="Nombre"
           sx={{ width: "12%" }}
           type="text"
           value={nombre}
           onChange={handleNombreChange}
         />
-        <Input
-          placeholder="Precio"
-          inputProps={ariaLabel}
+        <TextField
+          label="Precio"
           sx={{ width: "12%" }}
           type="number"
           value={precio}
           onChange={handlePrecioChange}
         />
-        <Input
-          placeholder="Stock"
-          inputProps={ariaLabel}
+        <TextField
+          label="Stock"
           sx={{ width: "12%" }}
           type="number"
           value={stock}
           onChange={handleStockChange}
         />
-        <Input
-          placeholder="Categoria"
-          inputProps={ariaLabel}
+        <TextField
+          label="Categoria"
           sx={{ width: "12%" }}
           type="text"
           value={categoria}
           onChange={handleCategoriaChange}
         />
-        <Input
-          placeholder="Fecha Alta"
-          inputProps={ariaLabel}
+        <TextField
+          label="Fecha Alta"
           sx={{ width: "12%" }}
           type="date"
           value={fechaAlta}
           onChange={handleFechaAltaChange}
+          InputLabelProps={{ shrink: true }}
         />
         <Button
           variant="contained"
