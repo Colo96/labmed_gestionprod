@@ -231,6 +231,7 @@ export default function TableProducts({ datos }) {
         isOpen={isUpdateModalOpen}
         handleClose={handleCloseUpdateModal}
         handleOpen={handleOpenUpdateModal}
+        products={post}
       />
     </div>
   );

@@ -69,7 +69,7 @@ const updateProduct = async (req, res) => {
   try {
     const { codigo, nombre, precio, stock, id_categoria } = req.body;
     const { id } = req.params;
-    if (!id || !codigo || !nombre || !precio || !stock || !id_categoria) {
+    if (!id || !codigo) {
       res.status(400).json({
         message: "Bad request. Please fill all fields",
       });

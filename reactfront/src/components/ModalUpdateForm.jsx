@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 
 // const putURL = "http://localhost:4000/api/products";
 
-export default function ModalUpdateForm({ isOpen, handleClose }) {
+export default function ModalUpdateForm({ isOpen, handleClose, products }) {
   const initialState = {
     codigo: "",
     nombre: "",
@@ -27,6 +27,22 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const productFound = products?.find(
+      (product) => product.codigo === formData.codigo
+    );
+    if (productFound) {
+      console.log(
+        "Id del producto: ",
+        productFound.id,
+        " que es de tipo: ",
+        typeof productFound.id
+      );
+      for (const property in productFound) {
+        console.log(`${property}:${productFound[property]}`);
+      }
+    } else {
+      console.log("Product not found");
+    }
     console.log(formData);
     setFormData(initialState);
   };
@@ -71,7 +87,6 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
               onChange={handleChange}
             />
             <TextField
-              required
               id="outlined-required"
               label="Nombre"
               placeholder="EJ:Tafirol"
@@ -82,7 +97,6 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
               onChange={handleChange}
             />
             <TextField
-              required
               id="outlined-required"
               label="Precio"
               placeholder="EJ:1374.99"
@@ -93,7 +107,6 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
               onChange={handleChange}
             />
             <TextField
-              required
               id="outlined-required"
               label="Stock"
               placeholder="EJ:32"
@@ -104,7 +117,6 @@ export default function ModalUpdateForm({ isOpen, handleClose }) {
               onChange={handleChange}
             />
             <TextField
-              required
               id="outlined-required"
               label="Categoria"
               placeholder="EJ:Ungüento"
